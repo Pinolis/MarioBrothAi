@@ -2,7 +2,8 @@
 Mario ai project
 
 
-FITNESS FUNCTION DI CHRISTPRESSO: 
+FITNESS FUNCTION DI CHRISTPRESSO:
+
 [GeneticAlgorithm]
 fitness_func = lambda frames, distance, game_score, did_win: \
 frames:     Number of frames that Mario has been alive for
