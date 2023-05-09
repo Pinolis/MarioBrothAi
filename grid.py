@@ -20,25 +20,25 @@ def blockMatch(block, cell, orb, matcher):
 
 
 
-source = cv2.imread("test.png")
-output_dir = 'C:/Users/4ndr5/OneDrive/Documenti/università/ai_lab/Progetto/tests/'
-block = cv2.imread("C:/Users/4ndr5/OneDrive/Documenti/university/ai_lab/Progetto/assets/brick_block_1.png")
+source = cv2.imread("testsDir\test.png")
+output_dir = 'testsDir\testOut.png'
+block = cv2.imread("testsDir\testBlock.png")
     
 # Define the number of rows and columns in the grid
 rows = 15
-cols = 16
+col = 16
 
-# Get the dimensions of the image
+# Get the dimensions of the image (should be 256x240)
 height, width = source.shape[:2]
 
 # Calculate the size of each cell in the grid
-cell_width = width // cols
+cell_width = width // col
 cell_height = height // rows
+orb=cv2.ORB_create()
 
 # Loop over each cell in the grid and extract its image data
-
 for y in range(rows):
-    for x in range(cols):
+    for x in range(col):
         matched_image=None
         x1 = x * cell_width
         y1 = y * cell_height
