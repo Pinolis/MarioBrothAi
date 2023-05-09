@@ -3,12 +3,20 @@ import os
 
 Dataset={}
 
+def getBlockData(blockName):
+    return Dataset[blockName][0], Dataset[blockName][1]
+
+def getMinMatch(blockName):
+    return Dataset[blockName][2]
+
 def PopulateDataset(dir, dataset, orb) :
     for filename in os.listdir(dir) :
             img = cv2.imread(os.path.join(dir, filename), cv2.IMREAD_COLOR)
             keypoints, des = orb.detectAndCompute(img,None)
             if not(dataset.has_key(filename)) :
-                dataset[filename] = (keypoints, des)
+                matchTreshold=None
+                dataset[filename] = (keypoints, des, matchTreshold)
+                
     return dataset
 
 def main() :

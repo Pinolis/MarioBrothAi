@@ -1,68 +1,77 @@
 # -*- coding: utf-8 -*-
 # pyton grid opencv2 for image
 import cv2
+import Dataset
+import Cell
+import numpy as np
+import win32gui
+from PIL import ImageGrab
 
-def blockMatch(block, cell, orb, matcher):
+def blockMatch(blockName, cell, orb, matcher):
     MIN_MATCH= 5 #parametro variabile
-    kpCell, desCell = orb.detectAndCompute(cell,None)
-    kpBlock, desBlock = Dataset.getpreBlockData(block)
+    kpCell, desCell = orb.detectAndCompute(Cell.getImgCell(cell),None)
+    kpBlock, desBlock = Dataset.getBlockData(blockName)
     matches = matcher.knnMatch(desCell,desBlock,k=2)
     good_matches = []
     for m,n in matches:
         if m.distance < 0.05 * n.distance:
             good_matches.append(m)
-    if len(good_matches) >= MIN_MATCH:
+    if len(good_matches) >= Dataset.getMinMatch(blockName):
         return True #nella return della funzione se true, il blocco nell immagine diventa quello passato nella funzione
     
-    
-    
-    
+def gridFrameMaker(frame,height, width):
+    cellList=[]
+    cell=Cell.Cell()
+    # Iterate over the image in 16x16 blocks
+    cellY=0
+    cellX=0
+    for y in range(0, height, 16):
+        cellY+=1
+        for x in range(0, width, 16):
+            cellX+=1
+            # Get the block of 16x16 pixels from the image
+            cell.setImg(frame[y:y+16, x:x+16])
+            cell.setX(cellX)
+            cell.setY(cellY)
+            # Add the block to the list
+            cellList.append(cell)
 
-
-
-source = cv2.imread("testsDir\test.png")
-output_dir = 'testsDir\testOut.png'
-block = cv2.imread("testsDir\testBlock.png")
-    
 # Define the number of rows and columns in the grid
-rows = 15
-col = 16
+rowsTot = 15
+colTot = 16
 
-# Get the dimensions of the image (should be 256x240)
-height, width = source.shape[:2]
+#VIDEO CAPTURE
 
-# Calculate the size of each cell in the grid
-cell_width = width // col
-cell_height = height // rows
-orb=cv2.ORB_create()
+# Create a named window for the game
+cv2.namedWindow("Game Window", cv2.WINDOW_NORMAL)
 
-# Loop over each cell in the grid and extract its image data
-for y in range(rows):
-    for x in range(col):
-        matched_image=None
-        x1 = x * cell_width
-        y1 = y * cell_height
-        x2 = x1 + cell_width
-        y2 = y1 + cell_height
-        cell = source[y1:y2, x1:x2]
+# Set the size and position of the OpenCV window
+topX, topY, w, h = win32gui.GetWindowRect(win32gui.FindWindow(None, "Super Mario Bros"))
+newWidth, newHeight = 256, 24
+cv2.moveWindow("Game Window", topX, topY)
+cv2.resizeWindow("Game Window", newWidth, newHeight)
 
-        # campute keypoints and decscriptors of the two images
-        keypoints_cell, des_cell = orb.detectAndCompute(cell, None)
-        
+cellWidth = newWidth / colTot
+cellHeight = newHeight / rowsTot
+# Loop through the game frames
+while True:
+    # Capture the game window using OpenCV
+    frame = cv2.cvtColor(np.array(ImageGrab.grab(bbox=(topX, topY, topX+newWidth, topY+newHeight))), cv2.COLOR_RGB2BGR)
 
-        # matching keypoints through knn
-        # matches = matcher.match(des_cell, des_block)
-        # matched_image= cv2.drawMatches(block,keypoints_block,block,des_block,matches,None)
-        
-        # while True:
-        #     cv2.imshow('block_matching', matched_image)
-        #     matched_image = cv2.resize(matched_image,(1500,800) )
-        #     if cv2.waitKey(1) & 0xFF == ord('q'):
-        #         break
-        
-        
-        
-        # Do something with the cell image data, such as saving it to a file
-        #cv2.imwrite('cell{}{}.png'.format(x,y), cell)
+    # Display the captured frame in the OpenCV window
+    cv2.imshow("Game Window", frame)
+    cellList=gridFrameMaker(frame, newHeight, newWidth)
+    
+
+    # Wait for a key event for 1 millisecond
+    key = cv2.waitKey(1)
+
+    # If the 'q' key is pressed, break out of the loop
+    if key == ord("q"):
+        break
+
+# Release the video capture object and destroy the OpenCV windows
+cv2.destroyAllWindows()
+
         
 
