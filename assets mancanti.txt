@@ -1,0 +1,7 @@
+goomba
+koopa
+guscio koopa quando lo uccidi
+fungo
+fiore
+stella	
+mario quando prende il fiore (forse no per il grayscaling)

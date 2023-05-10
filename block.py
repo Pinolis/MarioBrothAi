@@ -22,7 +22,6 @@ class Block:
     def setMoving(self, moving):
         self.moving = True
         
-    
     def setMatchTreshold(self, matchTreshold):
         self.matchTreshold = matchTreshold
     

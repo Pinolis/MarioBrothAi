@@ -1,0 +1,3 @@
+scorrere mappa da dx a sx, quando trovi tube body/ tub top, sai che al blocco dopo ci va l'altro pezzo del tubo (problema keypoint body left)
+se platform o è vuoto o è un moving object
+credo si possa evitare di ciclare le prime 2 righe perche contengono solo gli score ecc
