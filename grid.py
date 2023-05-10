@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pyton grid opencv2 for image
 import cv2
-import Dataset
+import dataset  as D
 import Cell
 import numpy as np
 import win32gui
@@ -10,13 +10,13 @@ from PIL import ImageGrab
 def blockMatch(blockName, cell, orb, matcher):
     MIN_MATCH= 5 #parametro variabile
     kpCell, desCell = orb.detectAndCompute(Cell.getImgCell(cell),None)
-    kpBlock, desBlock = Dataset.getBlockData(blockName)
+    kpBlock, desBlock = D.Dataset[blockName].getKp(), D.Dataset[blockName].getDes()
     matches = matcher.knnMatch(desCell,desBlock,k=2)
-    good_matches = []
+    good_matches = 0
     for m,n in matches:
         if m.distance < 0.05 * n.distance:
-            good_matches.append(m)
-    if len(good_matches) >= Dataset.getMinMatch(blockName):
+            good_matches+=1
+    if good_matches >= D.Dataset[blockName].getMatchTreshold():
         return True #nella return della funzione se true, il blocco nell immagine diventa quello passato nella funzione
     
 def gridFrameMaker(frame,height, width):
