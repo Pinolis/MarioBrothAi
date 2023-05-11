@@ -4,6 +4,7 @@ class Cell:
         self.y = None
         self.img = None
     
+    #sets
     def setImg(self, img):
         self.img = img
 
@@ -14,7 +15,7 @@ class Cell:
         self.y=y
         
         
-    
+    #gets
     def getX(self):
         return self.x
     

@@ -5,6 +5,7 @@ class Block:
         self.des = None
         self.moving = False
         self.matchTreshold = None
+        self.perc = False
         
     #sets
     def setImg(self, img):
@@ -24,6 +25,9 @@ class Block:
         
     def setMatchTreshold(self, matchTreshold):
         self.matchTreshold = matchTreshold
+        
+    def setPerc(self):
+        self.perc = True
     
     #gets
     def getImg(self):
@@ -31,6 +35,9 @@ class Block:
     
     def isMoving(self):
         return self.moving
+    
+    def isPerc(self):
+        return self.perc
     
     def getMatchTreshold(self):
         return self.matchTreshold
