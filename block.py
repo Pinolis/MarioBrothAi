@@ -20,7 +20,7 @@ class Block:
     def setIndex(self, index):
         self.index = index
     
-    def setMoving(self, moving):
+    def setMoving(self):
         self.moving = True
         
     def setMatchTreshold(self, matchTreshold):

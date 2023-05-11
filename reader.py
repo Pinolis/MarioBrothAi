@@ -3,8 +3,8 @@
 import cv2
 from Cell import Cell
 import Dataset as D
-import numpy as np
 import os
+import numpy as np
 
 #function that matches block and cell
 def blockMatch(blockName, cell, sift, matcher, dataset):
@@ -12,6 +12,9 @@ def blockMatch(blockName, cell, sift, matcher, dataset):
     processed=D.preProcessing(cell.getImg())
     kpCell, desCell = sift.detectAndCompute(processed,None)
     kpBlock, desBlock = dataset[blockName].getKp(), dataset[blockName].getDes()
+    #convert the des senno non funziona il matcher
+    desCell = desCell.astype(np.float32)
+    desBlock = desBlock.astype(np.float32)
     matches = matcher.knnMatch(desCell,desBlock,k=2)
     good_matches = 0
     for m,n in matches:
@@ -30,7 +33,7 @@ def cellListMaker(frame, width, height):
         cellY+=1
         for x in range(0, width, 16):
             #reset index at end of line
-            if cellX==colTot-1:
+            if cellX==16-1:
                 cellX=-1
             cellX+=1
             # init the cell with the coordinates and the image
@@ -63,8 +66,8 @@ def MatrixMaker(oldMatrix, cellList, dataset):
         
         oldBlockName = oldMatrix[y][x]
         
-        #caso generale di ottimizzazione blocco vecchio
-        if blockMatch(oldBlockName, cell, sift, matcher, dataset):
+        #caso generale di ottimizzazione blocco vecchio ma scartato in caso di background
+        if oldBlockName != 'B' and blockMatch(oldBlockName, cell, sift, matcher, dataset):
             matrixrow.append(oldBlockName)
         else:
             blocks=list(dataset.keys())
@@ -73,7 +76,7 @@ def MatrixMaker(oldMatrix, cellList, dataset):
                 i+=1
             else:
                 if i==len(blocks):
-                    matrixrow.append('background')
+                    matrixrow.append('B')
                 else:
                     matrixrow.append(blocks[i])
 
@@ -95,15 +98,11 @@ def saveCellList(cellList, dir):
 ######################################################################
 
 
-# Define the number of rows and columns in the grid
-rowsTot = 15
-colTot = 16
-height = 240
-width = 256
+
 
 # Load the image
-frame = cv2.imread("testFrame.png")
-cellList=cellListMaker(frame, width, height)
+#frame = cv2.imread("testFrame.png")
+#cellList=cellListMaker(frame, width, height)
 #saveCellList(cellList, "cells")
 
 

@@ -2,7 +2,7 @@ import cv2
 import os
 from Block import Block
 
-def prePorcessing(img) :
+def preProcessing(img) :
     upsampled = cv2.resize(img, None, fx=3, fy=3, interpolation=cv2.INTER_LINEAR)
     gray = cv2.cvtColor(upsampled, cv2.COLOR_BGR2GRAY)
     gray_eq= cv2.equalizeHist(gray)      
@@ -25,7 +25,7 @@ def PopulateDataset(dir) :
             fullpath = os.path.join(dir, filename)
             img=cv2.imread(fullpath)
             #preprocessing
-            processed=prePorcessing(img)
+            processed=preProcessing(img)
             
             #detect
             keypoints, des = sift.detectAndCompute(processed,None)

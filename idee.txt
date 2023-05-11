@@ -1,5 +1,6 @@
 scorrere mappa da dx a sx, quando trovi tube body/ tub top, sai che al blocco dopo ci va l'altro pezzo del tubo (problema keypoint body left)
-se platform o è vuoto o è un moving object
-credo si possa evitare di ciclare le prime 2 righe perche contengono solo gli score ecc
-se becchiamo la testa di mario, sotto ci sarà il corpo (per l'ottimizzazione)
+se oldblock è platform e non lo è più o è vuoto o è un moving object
+se becchiamo la testa di mario grande, sotto ci sarà il corpo (per l'ottimizzazione)
 se becchiamo la il blocco del top della pole-> tutto c'ho che c'è sotto è un blocco
+manca l'implementazione di dire che se hai trovato il tubo dx , a sx ci sta il tubo ancora
+tocca testare con vari frame tutti i treshold nel main
