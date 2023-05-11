@@ -1,15 +1,14 @@
 import cv2
 import os
-import block as b
+from block import Block
 
-
-def PopulateDataset(dir) :
+Dataset={}
+def PopulateDataset(dir, dataset) :
     #creo il sift
     sift = cv2.SIFT_create()
     sift.setContrastThreshold(0.0001)
     sift.setNOctaveLayers(20)
     sift.setSigma(3.0)
-    dataset={}
     index=0
     #ciclo la directori di assets
     for filename in os.listdir(dir) :
@@ -30,17 +29,16 @@ def PopulateDataset(dir) :
             
             #se il file non è nel dizionario aggiungo l'oggetto blocco
             if not(filename in dataset) :
-                block= b.Block()
+                block= Block()
                 block.setKp(keypoints)
                 block.setDes(des)
                 block.setImg(img)
                 dataset[filename] = block
-    return dataset
+    return
 
 def main() :
-    
-    Dataset=PopulateDataset("assets")
-    return Dataset
+    PopulateDataset("assets", Dataset)
+    return 
     
 if __name__ == "__main__":
     main()

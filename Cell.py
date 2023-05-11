@@ -1,23 +1,26 @@
-
-print("cioao")
-
-def Cell():
-    
-    def __init__ ():
+class Cell:
+    def __init__ (self):
         self.x = None
         self.y = None
         self.img = None
     
-    def setImg(img):
-        self.imgCell = img
+    def setImg(self, img):
+        self.img = img
 
-    def setX(x):
+    def setX(self, x):
         self.x=x
 
-    def setY(y):
+    def setY(self, y):
         self.y=y
-
-    def getImgCell(img):
-        return imgCell
+        
+        
     
+    def getX(self):
+        return self.x
+    
+    def getY(self):
+        return self.y
+    
+    def getImg(self):
+        return self.img
 
