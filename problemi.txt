@@ -1,0 +1,39 @@
+
+
+
+
+bugs:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-diarrea cronica
+
+-cappella pulsante
+
+-funghi ai piedi
+
+-sandali di Cristo
+
+-errore: un print mostra cosa c'è nella matrice che rappresenta il mondo, provando a cambiare vari threshold continua
+	 a riempirla sempre con l'immagine della merda(scherzo), volevo dire che in pratica, ogni volta, si riempie,
+	 con cosa? chiederete voi, e io vi dirò: "ogni volta per ogni elemento della matrix viene storata sempre e solo 
+	 un'immagine... quale immagine? Non è importante, ragazzi".
+
+
+fine report, 
+grazie 
+dell'attenzione
+
+
+-Filippo Galasso 

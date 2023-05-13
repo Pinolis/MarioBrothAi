@@ -1,6 +1,6 @@
 import cv2
 import os
-from Block import Block
+from block import Block
 
 def preProcessing(img) :
     upsampled = cv2.resize(img, None, fx=3, fy=3, interpolation=cv2.INTER_LINEAR)

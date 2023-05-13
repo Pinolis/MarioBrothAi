@@ -1,6 +1,6 @@
 import Dataset as D
-from Block import *
-import Reader as R
+from block import *
+import reader as R
 import cv2
 from Map import *
 
@@ -17,39 +17,45 @@ dataset['starP'].setMoving()
 dataset['starP'].setPerc()
 
 #TRESHOLdS
-dataset['big_mario_baseM'].setMatchTreshold(3)
-dataset['big_mario_headM'].setMatchTreshold(3)
-dataset['blockO'].setMatchTreshold(3)
-dataset['brickO'].setMatchTreshold(3)
-dataset['brick(2)O'].setMatchTreshold(3)
-dataset['flag_pole_topO'].setMatchTreshold(3)
-dataset['goombaE'].setMatchTreshold(3)
-dataset['koopa_shellE'].setMatchTreshold(3)
-dataset['koopaE'].setMatchTreshold(3)
-dataset['mushroomP'].setMatchTreshold(3)
-dataset['platformO'].setMatchTreshold(3)
-dataset['pressed_blockO'].setMatchTreshold(3)
-dataset['question_block_brownO'].setMatchTreshold(3)
-dataset['question_block_brown(2)O'].setMatchTreshold(3)
-dataset['question_block_yellowO'].setMatchTreshold(3)
-dataset['small_marioM'].setMatchTreshold(3)
-dataset['starP'].setMatchTreshold(3)
-dataset['tube_body_RO'].setMatchTreshold(3)
-dataset['tube_top_RO'].setMatchTreshold(3)
+dataset['big_mario_baseM'].setMatchTreshold(0.7)
+dataset['big_mario_headM'].setMatchTreshold(0.8)
+dataset['blockO'].setMatchTreshold(0.5)
+dataset['brickO'].setMatchTreshold(0.6)
+dataset['brick(2)O'].setMatchTreshold(0.7)
+dataset['flag_pole_topO'].setMatchTreshold(0.88)
+dataset['goombaE'].setMatchTreshold(0.45)
+dataset['koopa_ShellE'].setMatchTreshold(0.66)
+dataset['koopaE'].setMatchTreshold(0.88)
+dataset['mushroomP'].setMatchTreshold(0.55)
+dataset['platformO'].setMatchTreshold(0.66)
+dataset['pressed_blockO'].setMatchTreshold(0.4)
+dataset['question_block_brownO'].setMatchTreshold(0.44)
+dataset['question_block_brown(2)O'].setMatchTreshold(0.76)
+dataset['question_block_yellowO'].setMatchTreshold(0.87)
+dataset['small_marioM'].setMatchTreshold(0.76)
+dataset['starP'].setMatchTreshold(0.67)
+dataset['tube_body_RO'].setMatchTreshold(0.89)
+dataset['tube_top_RO'].setMatchTreshold(0.24)
 #manca il fiore
 
 ###########TEST ZONE#############
 # define the number of rows and columns in the grid
-rowsTot = 15
+rowsTot = 15 #15 prima
 colTot = 16
 heigth = 240
 width = 256
 
+rowOffset = 2
+
+
 frame = cv2.imread("testFrame.png")
 cellList=R.cellListMaker(frame, width, heigth)
-startMatrix=[['B' for j in range(colTot)] for i in range(rowsTot)]
+startMatrix=[['B' for j in range(colTot)] for i in range(rowsTot)] #scambio rowstot con coltot
 matrix=R.MatrixMaker(startMatrix, cellList, dataset)
-map= Map(width,heigth,16)
+
+print(matrix)
+map= Map(width,heigth-rowOffset*16,16)
+
 map.setMapping(matrix)
 map.displayImg()
 

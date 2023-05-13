@@ -10,11 +10,19 @@ import numpy as np
 def blockMatch(blockName, cell, sift, matcher, dataset):
     MIN_MATCH= 5 #parametro variabile
     processed=D.preProcessing(cell.getImg())
+
+
+
     kpCell, desCell = sift.detectAndCompute(processed,None)
     kpBlock, desBlock = dataset[blockName].getKp(), dataset[blockName].getDes()
     #convert the des senno non funziona il matcher
-    desCell = desCell.astype(np.float32)
-    desBlock = desBlock.astype(np.float32)
+
+    if desCell is None:
+        return False
+    
+    desCell = desCell.astype(np.uint8) #old np.float32
+
+    desBlock = desBlock.astype(np.uint8)
     matches = matcher.knnMatch(desCell,desBlock,k=2)
     good_matches = 0
     for m,n in matches:
@@ -71,6 +79,7 @@ def MatrixMaker(oldMatrix, cellList, dataset):
             matrixrow.append(oldBlockName)
         else:
             blocks=list(dataset.keys())
+     
             i=0
             while i<len(blocks)-1 and not(blockMatch(blocks[i], cell,sift, matcher, dataset)):
                 i+=1
@@ -83,6 +92,8 @@ def MatrixMaker(oldMatrix, cellList, dataset):
         if x == 15:
             matrix.append(matrixrow)
             matrixrow=[]
+    
+    return matrix
 
 '''            
 #function for debug purpuse
